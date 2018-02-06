@@ -1,8 +1,13 @@
 md-toolbar {
     background-color: #C5CAE9;
 }
+md-toolbar > h1, md-toolbar > h1 > a {
+    color: white;
+    font-family: 'Rammetto One', cursive;
+    text-decoration: none;
+}
 
 #mapid {
     display: block;
-    height: 480px;
+    height: 600px;
 }
