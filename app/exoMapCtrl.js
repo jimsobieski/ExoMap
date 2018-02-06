@@ -1,21 +1,7 @@
-angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl', function($scope, $mdSidenav, $window) {
+angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl', function($scope, $mdSidenav) {
 
-    $scope.sizeMap = 100;
 
     $scope.toggleSidenav = function() {
-        $mdSidenav('right').toggle();
-        changeSizeMap();
+        $mdSidenav('left').toggle();
     };
-
-    var changeSizeMap = function () {
-        console.log($window.innerWidth);
-        console.log($mdSidenav);
-        if($scope.sizeMap === 100) {
-            $scope.sizeMap = 80;
-        }
-        else {
-            $scope.sizeMap = 100;
-        }
-    }
-
 });
