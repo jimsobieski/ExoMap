@@ -19,19 +19,26 @@
     <title>ExoMap</title>
 </head>
 <body ng-controller="ExoMapCtrl" layout="column">
-<md-toolbar layout="row">
-    <md-button ng-click="toggleSidenav()">
+<md-toolbar layout="row" layout-align="space-between center">
+
+    <md-button aria-label="menu" ng-click="toggleSidenav()">
         <md-icon md-svg-src="icons/reorder.svg"></md-icon>
     </md-button>
     <h1><a href="#/">ExoMap</a></h1>
 
+    <md-input-container class="search-input">
+        <label>Recherche</label>
+        <input>
+    </md-input-container>
+
 </md-toolbar>
+
 <section id="main-section" layout="row" flex>
     <md-sidenav md-disable-backdrop id="sidenav" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-        <md-menu>
+        <md-menu class="md-menu">
             <md-menu-content>
                 <md-menu-item>
-                    <md-button>
+                    <md-button ng-click="showStops()">
                         <md-icon md-svg-src="icons/bus.svg"></md-icon>
                         Bus
                     </md-button>
@@ -58,19 +65,7 @@
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
         crossorigin=""></script>
 <script>
-    var mymap = L.map('mapid').setView([48.866, 2.33], 13);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: 'pk.eyJ1Ijoiamltc29iaWVza2kiLCJhIjoiY2pkYmtqcmJoMXdhMDMzbzI5MmpvdTE0aSJ9.G7SHd5ABI79uOHzj-bOOEA'
-    }).addTo(mymap);
-    var circle = L.circle([51.508, -0.11], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
+
 </script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
@@ -79,6 +74,7 @@
 <script src="bower_components/angular-material/angular-material.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
 <script src="app.js"></script>
 <script src="map/map.js"></script>
 <script src="exoMapCtrl.js"></script>

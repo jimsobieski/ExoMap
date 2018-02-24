@@ -30,6 +30,11 @@ md-toolbar > h1 > a{
     z-index: 5;
 }
 
+.search-input >input {
+    background-color: white;
+
+}
+
 #mapid {
     display: block;
     height: 100%;

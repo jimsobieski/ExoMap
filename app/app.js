@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ngAnimate',
     'ngMessages',
     'ngRoute',
+    'geolocation',
     'myApp.MapCtrl',
     'myApp.ExoMapCtrl'
 ]).config(['$locationProvider', '$routeProvider', '$qProvider', function ($locationProvider, $routeProvider, $qProvider) {
