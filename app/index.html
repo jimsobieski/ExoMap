@@ -35,29 +35,24 @@
 
 <section id="main-section" layout="row" flex>
     <md-sidenav md-disable-backdrop id="sidenav" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-        <md-menu class="md-menu">
-            <md-menu-content>
-                <md-menu-item>
-                    <md-button ng-click="showStops()">
-                        <md-icon md-svg-src="icons/bus.svg"></md-icon>
-                        Bus
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button>
-                        <md-icon md-svg-src="icons/subway.svg"></md-icon>
-                        Metro
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button>
-                        <md-icon md-svg-src="icons/railway.svg"></md-icon>
-                        Tramways
-                    </md-button>
-                </md-menu-item>
-            </md-menu-content>
-        </md-menu>
-
+        <md-menu-item>
+            <md-button ng-click="showStops()">
+                <md-icon md-svg-src="icons/bus.svg"></md-icon>
+                Bus
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button>
+                <md-icon md-svg-src="icons/subway.svg"></md-icon>
+                Metro
+            </md-button>
+        </md-menu-item>
+        <md-menu-item>
+            <md-button>
+                <md-icon md-svg-src="icons/railway.svg"></md-icon>
+                Tramways
+            </md-button>
+        </md-menu-item>
     </md-sidenav>
     <div flex layout="column" id="mapid"></div>
 </section>

@@ -31,8 +31,9 @@ const sequelize = new Sequelize('gtfs', 'root', '', {
 //API ROUTES
 
 router.route('/stops')
-    .get(function(req, res) {
-        sequelize.query('SELECT * FROM stops LIMIT 800', { type: sequelize.QueryTypes.SELECT})
+    .post(function(req, res) {
+        sequelize.query('SELECT * FROM stops WHERE (stop_lat BETWEEN '+req.body.minLat+' AND '+req.body.maxLat+
+            ') AND (stop_lon BETWEEN '+req.body.minLon+' AND '+req.body.maxLon+');', { type: sequelize.QueryTypes.SELECT})
             .then(result => {
             res.json(result);
         });
