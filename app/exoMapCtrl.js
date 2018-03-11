@@ -147,18 +147,26 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
             $scope.clearMarkers();
 
             mymap.setView([stop.stop_lat, stop.stop_lon], $scope.zoom);
+            $scope.makeStopMarker(stop);
+        };
+
+        $scope.makeStopMarker = function(stop) {
             var latlng = L.latLng(stop.stop_lat, stop.stop_lon);
             var origin = L.latLng($scope.coords.lat, $scope.coords.long);
             $scope.stopDistance = (mymap.distance(latlng, origin) / 1000).toFixed(2);
 
-            $scope.markerStop = L.marker([stop.stop_lat, stop.stop_lon])
-                .bindPopup(stop.stop_name).openPopup().addTo(mymap);
-
             var popup = L.popup()
                 .setLatLng(latlng)
-                .setContent('<h2>' + stop.stop_name + '</h2><p>Distance : <span>' + $scope.stopDistance + ' km</span></p>')
+                .setContent('<h2>' + stop.stop_name + '</h2><p>Distance : <span>' + $scope.stopDistance + ' km</span></p>' +
+                    '<md-button>Afficher horaires</md-button>')
                 .openOn(mymap);
-        };
+
+            var marker = L.marker([stop.stop_lat, stop.stop_lon]);
+
+            $scope.markerStop = marker;
+
+            marker.bindPopup(popup).openPopup().addTo(mymap);
+        }
 
 
         $scope.openLoginModal = function (ev) {
@@ -184,6 +192,36 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
                 clickOutsideToClose: true
             }).then(function (answer) {
 
+            })
+        };
+
+        $scope.getRoutesLigne = function(ligne) {
+            $scope.routesLigne= [];
+            angular.forEach($scope.routes, function (route, key) {
+                if(route.route_short_name === ligne.name){
+                    $scope.routesLigne.push(route);
+                }
+            });
+            return $scope.routesLigne;
+        };
+        $scope.getStopRoute = function(route) {
+            var data = {route_id: route.route_id};
+            return $http.post('http://localhost:8081/api/route/stops', JSON.stringify(data)).then(function(response){
+                $scope.stopsRoute = response.data[0];
+            })
+        };
+
+        $scope.showLigne = function(ligne) {
+            $scope.getRoutesLigne(ligne);
+            $scope.getStopRoute($scope.routesLigne[0]).then(function(){
+                $scope.printLigne($scope.stopsRoute);
+            })
+        };
+
+        $scope.printLigne = function(stopsRoute){
+            $scope.clearMarkers();
+            angular.forEach(stopsRoute, function(stop, key) {
+                $scope.makeStopMarker(stop);
             })
         }
 

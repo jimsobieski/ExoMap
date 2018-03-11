@@ -76,7 +76,7 @@
             </md-button>
         </md-menu-item>
         <md-list ng-if="rer" class="lignes_list">
-            <md-list-item ng-repeat="ligne in rer | orderBy : 'name'" ng-if="ligne.route_url==1"  ng-click="openLigneDialog(ligne)">
+            <md-list-item ng-repeat="ligne in rer | orderBy : 'name'" ng-if="ligne.route_url==1"  ng-click="showLigne(ligne)">
                     <md-icon md-svg-src="icons/ligne_{{ligne.name}}.svg"></md-icon>
                     RER {{ligne.name}}
             </md-list-item>

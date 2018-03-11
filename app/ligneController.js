@@ -17,6 +17,14 @@ angular.module('myApp.ligneController', ['ngRoute'])
         $scope.getRoutesLigne();
 
         $scope.toggleStopRoutes = function(route){
+            if($scope.stopsRoute) {
+                delete $scope.stopsRoute
+            }
+            else {
+                $scope.getStopRoutes(route);
+            }
+        };
+        $scope.getStopRoutes = function(route) {
             var data = {route_id: route.route_id};
             $http.post('http://localhost:8081/api/route/stops', JSON.stringify(data)).then(function(response){
                 $scope.stopsRoute = response.data[0];
