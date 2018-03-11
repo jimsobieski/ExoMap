@@ -48,6 +48,17 @@ var user = sequelize.define('user', {
 
 //API ROUTES
 
+router.route('/routes')
+    .get(function (req, res) {
+        sequelize.query('SELECT * FROM routes;', {type: sequelize.QueryTypes.SELECT})
+            .then(result => {
+            res.json(result);
+    });
+
+    });
+
+
+
 //MAP SEARCH
 router.route('/geosearch')
     .post(function (req, res) {
@@ -97,6 +108,14 @@ router.route('/logout')
                 token: ''
             }, { where: {token: req.body.token}});
         });
+    });
+
+router.route('/user')
+    .post(function(req,res) {
+        sequelize.query('SELECT login, email FROM users WHERE token = "' + req.body.token + '"', {type: sequelize.QueryTypes.SELECT})
+            .then(result => {
+            res.json(result);
+    })
     });
 
 app.use('/api', router);
