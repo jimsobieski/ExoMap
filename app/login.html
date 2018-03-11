@@ -1,0 +1,36 @@
+<md-dialog layout-padding aria-label="Connexion" class="login-modal">
+    <md-tabs md-stretch-tabs="always">
+        <md-tab>
+            <md-tab-label>Connexion</md-tab-label>
+            <md-tab-body>
+                <form ng-cloak name="connexionForm" ng-submit="signin()">
+                    <h3>Connexion</h3>
+                    <md-input-container>
+                        <label>Login</label>
+                        <input ng-model="login" type="text" required>
+                        <div ng-messages="connexionForm.login.$error" role="alert">
+                            <div ng-message when="required">Ce champ est obligatoire</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Mot de passe</label>
+                        <input ng-model="password" type="password" required>
+                        <div ng-messages="connexionForm.password.$error" role="alert">
+                            <div ng-message when="required">Ce champ est obligatoire</div>
+                        </div>
+                    </md-input-container>
+                    <div layout="row">
+                        <md-button class="md-raised" ng-click="closeDialog()" aria-label="annuler">annuler</md-button>
+                        <md-button class="md-primary md-raised" type="submit" aria-label="connexion">connexion</md-button>
+                    </div>
+                </form>
+            </md-tab-body>
+        </md-tab>
+        <md-tab>
+            <md-tab-label>Inscription</md-tab-label>
+            <md-tab-body><p>test</p></md-tab-body>
+        </md-tab>
+    </md-tabs>
+
+
+</md-dialog>

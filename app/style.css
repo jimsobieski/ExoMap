@@ -40,3 +40,25 @@ md-toolbar > h1 > a{
     height: 100%;
     z-index: 1;
 }
+
+.list-button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+md-tab-item {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    font-size: 12px !important;
+
+}
+
+.login-modal {
+    height: 380px;
+}
+
+.login-modal > md-tabs {
+    height:95%;
+}

@@ -16,6 +16,9 @@
     <link href="bower_components/angular-material/angular-material.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="style.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Rammetto+One" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet'/>
+
     <title>ExoMap</title>
 </head>
 <body ng-controller="ExoMapCtrl" layout="column">
@@ -25,16 +28,36 @@
         <md-icon md-svg-src="icons/reorder.svg"></md-icon>
     </md-button>
     <h1><a href="#/">ExoMap</a></h1>
-
-    <md-input-container class="search-input">
-        <label>Recherche</label>
-        <input>
-    </md-input-container>
-
+    <div layout="row">
+        <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                         md-items="stop in searchStop(searchText)"
+                         md-item-text="stop.stop_name">
+            <md-item-template>
+                <md-button class="list-button" ng-click="goToStop(stop)" aria-label="Aller a">
+                    <span md-highlight-text="searchText">{{stop.stop_name}}</span>
+                </md-button>
+            </md-item-template>
+        </md-autocomplete>
+        <md-menu>
+            <md-button class="md-icon-button" ng-click="isAuthenticated() ? $mdMenu.open($event): openLoginModal()" aria-label="menu">
+                <md-icon md-svg-src="icons/person_white.svg"></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>Open Source</md-menu-item>
+                <md-menu-item><md-button class="list-button" ng-click="logout()">Logout</md-button></md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
 </md-toolbar>
 
 <section id="main-section" layout="row" flex>
     <md-sidenav md-disable-backdrop id="sidenav" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
+        <md-menu-item>
+            <md-button ng-click="goToGeolocalisation()">
+                <md-icon md-svg-src="icons/pin_circle_black.svg"></md-icon>
+                Ma position
+            </md-button>
+        </md-menu-item>
         <md-menu-item>
             <md-button ng-click="showStops()">
                 <md-icon md-svg-src="icons/bus.svg"></md-icon>
@@ -69,9 +92,12 @@
 <script src="bower_components/angular-material/angular-material.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-base64/angular-base64.js"></script>
 <script src="bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
 <script src="app.js"></script>
 <script src="map/map.js"></script>
 <script src="exoMapCtrl.js"></script>
+<script src="loginController.js"></script>
 </body>
 </html>
