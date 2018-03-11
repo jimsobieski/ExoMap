@@ -1,0 +1,17 @@
+<md-dialog layout-padding aria-label="Ligne" class="ligne-modal">
+    <div layout="row" layout="space-between center">
+        <h2>Ligne {{ligne.name}}</h2>
+        <md-icon md-svg-src="icons/ligne_{{ligne.name}}.svg"></md-icon>
+    </div>
+    <md-list>
+        <md-list-item ng-repeat="route in routesLigne" layout="column">
+            <p>{{route.route_long_name}}</p>
+            <md-button class="md-primary" ng-click="toggleStopRoutes(route)">Plus d'infos</md-button>
+            <md-list ng-if="stopsRoute">
+                <md-list-item ng-repeat="stop in stopsRoute">
+                    <p>{{stop.stop_name}}</p>
+                </md-list-item>
+            </md-list>
+        </md-list-item>
+    </md-list>
+</md-dialog>

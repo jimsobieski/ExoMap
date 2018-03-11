@@ -70,30 +70,46 @@
         </md-menu-item>
         <md-divider></md-divider>
         <md-menu-item>
-            <md-button ng-click="toggleLignes()">
+            <md-button ng-click="toggleLignes(1)">
                 <md-icon md-svg-src="icons/rer.svg"></md-icon>
                 RER
             </md-button>
         </md-menu-item>
-        <md-list ng-if="lignes">
-            <md-list-item ng-repeat="ligne in lignes" ng-if="ligne.type==2">
-                <div class="md-list-item-text">
+        <md-list ng-if="rer" class="lignes_list">
+            <md-list-item ng-repeat="ligne in rer | orderBy : 'name'" ng-if="ligne.route_url==1"  ng-click="openLigneDialog(ligne)">
                     <md-icon md-svg-src="icons/ligne_{{ligne.name}}.svg"></md-icon>
-                    Ligne {{ligne.name}}</div>
+                    RER {{ligne.name}}
             </md-list-item>
         </md-list>
+        <md-divider></md-divider>
         <md-menu-item>
-            <md-button>
+            <md-button ng-click="toggleLignes(2)">
                 <md-icon md-svg-src="icons/transilien.svg"></md-icon>
                 Transilien
             </md-button>
         </md-menu-item>
+            <md-list ng-if="trans" class="lignes_list">
+                <md-list-item ng-repeat="ligne in trans | orderBy : 'name'" ng-if="ligne.route_url==2"  ng-click="openLigneDialog(ligne)">
+                    <md-icon md-svg-src="icons/ligne_{{ligne.name}}.svg"></md-icon>
+                    Transilien {{ligne.name}}
+                </md-list-item>
+            </md-list>
+
+        <md-divider></md-divider>
         <md-menu-item>
-            <md-button>
+            <md-button ng-click="toggleLignes(3)">
                 <md-icon md-svg-src="icons/tram.svg"></md-icon>
-                tramway
+                Tramway
             </md-button>
         </md-menu-item>
+            <md-list ng-if="tram" class="lignes_list">
+                <md-list-item ng-repeat="ligne in tram | orderBy : 'name'" ng-if="ligne.route_url==3"  ng-click="openLigneDialog(ligne)">
+                    <md-icon md-svg-src="icons/ligne_{{ligne.name}}.svg"></md-icon>
+                    Ligne {{ligne.name}}
+                </md-list-item>
+            </md-list>
+
+        <md-divider></md-divider>
     </md-sidenav>
     <div flex layout="column" id="mapid"></div>
 </section>
@@ -117,5 +133,6 @@
 <script src="map/map.js"></script>
 <script src="exoMapCtrl.js"></script>
 <script src="loginController.js"></script>
+<script src="ligneController.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
         $scope.goToGeolocalisation = function () {
             geolocation.getLocation().then(function (data) {
                 $scope.coords = {lat: data.coords.latitude, long: data.coords.longitude};
+                console.log($scope.coords);
                 mymap.setView([$scope.coords.lat, $scope.coords.long], $scope.zoom);
                 $scope.markerGeo = L.circle([$scope.coords.lat, $scope.coords.long], {
                     color: '#1976D2',
@@ -44,13 +45,15 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
         };
         $scope.getRoutes();
 
-        $scope.getLignes = function () {
-            $scope.lignes = [];
+        $scope.getLignes = function (ligneType) {
+            var tmp = [];
+
             angular.forEach($scope.routes, function (route, key) {
                 var match = false;
-                for (var i = 0; i < $scope.lignes.length; i++) {
 
-                    if ($scope.lignes[i].name === route.route_short_name) {
+                for (var i = 0; i < tmp.length; i++) {
+
+                    if (tmp[i].name === route.route_short_name) {
                         match = true;
                         break;
                     }
@@ -58,22 +61,54 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
                 if (!match) {
                     var ligne = {
                         name: route.route_short_name,
-                        type: route.route_type
+                        type: route.route_type,
+                        route_url: route.route_url
                     };
-                    $scope.lignes.push(ligne);
+                    tmp.push(ligne);
                 }
 
+
             });
-            console.log($scope.lignes);
-            return $scope.lignes;
+            switch(ligneType) {
+                case 1 : $scope.rer = tmp;
+                    return $scope.rer;
+                case 2 : $scope.trans = tmp;
+                    return $scope.trans;
+                case 3 : $scope.tram = tmp;
+                    return $scope.tram;
+                case 4 : $scope.bus = tmp;
+                    return $scope.bus;
+                default: return [];
+            }
         };
 
-        $scope.toggleLignes = function() {
-          if($scope.lignes) {
-              delete $scope.lignes;
-          }  else {
-              $scope.getLignes();
-          }
+        $scope.toggleLignes = function(ligneType) {
+            if(ligneType===1){
+                if($scope.rer){
+                    delete $scope.rer;
+                } else{
+                    delete $scope.trans;
+                    delete $scope.tram;
+                    $scope.getLignes(ligneType);
+                }
+            }else if (ligneType === 2) {
+                if($scope.trans){
+                    delete $scope.trans;
+                }else {
+                    delete $scope.rer;
+                    delete $scope.tram;
+                    $scope.getLignes(ligneType);
+                }
+            }else if (ligneType === 3) {
+                if($scope.tram) {
+                    delete $scope.tram;
+                } else {
+                    delete $scope.trans;
+                    delete $scope.rer;
+                    $scope.getLignes(ligneType);
+                }
+
+            }
         };
 
         $scope.getStops = function () {
@@ -121,7 +156,7 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
 
             var popup = L.popup()
                 .setLatLng(latlng)
-                .setContent('<h2>' + stop.stop_name + '</h2><p>Distance : <span step="0.01">' + $scope.stopDistance + ' km</span></p>')
+                .setContent('<h2>' + stop.stop_name + '</h2><p>Distance : <span>' + $scope.stopDistance + ' km</span></p>')
                 .openOn(mymap);
         };
 
@@ -138,6 +173,19 @@ angular.module('myApp.ExoMapCtrl', ['ngRoute']).controller('ExoMapCtrl',
 
             })
         };
+
+        $scope.openLigneDialog = function (ligne) {
+            $mdDialog.show({
+                locals: {ligne: ligne, routes: $scope.routes},
+                controller: 'ligneController',
+                controllerAs: 'ligne',
+                templateUrl: 'ligne.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true
+            }).then(function (answer) {
+
+            })
+        }
 
         $scope.setZoom = function () {
             mymap.setZoom($scope.zoom);

@@ -62,3 +62,7 @@ md-tab-item {
 .login-modal > md-tabs {
     height:95%;
 }
+
+.lignes_list md-icon{
+    margin-left: 12px;
+}

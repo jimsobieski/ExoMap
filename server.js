@@ -57,6 +57,15 @@ router.route('/routes')
 
     });
 
+router.route('/route/stops')
+    .post(function(req, res) {
+        sequelize.query('SELECT DISTINCT(stop_name), s.stop_id, stop_lat, stop_lon FROM stops s, trips t, routes r, stop_times st ' +
+            'WHERE r.route_id = t.route_id AND  t.trip_id = st.trip_id' +
+            ' AND s.stop_id = st.stop_id AND r.route_id ="'+ req.body.route_id+'";').then(result => {
+                res.json(result);
+        })
+    })
+
 
 
 //MAP SEARCH

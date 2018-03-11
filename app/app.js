@@ -9,6 +9,7 @@ var exomap =angular.module('myApp', [
     'base64',
     'ngStorage',
     'myApp.loginController',
+    'myApp.ligneController',
     'myApp.ExoMapCtrl'
 ]).config(['$locationProvider', '$routeProvider', '$qProvider', '$httpProvider', function ($locationProvider, $routeProvider, $qProvider, $httpProvider, $http) {
     $qProvider.errorOnUnhandledRejections(false);
